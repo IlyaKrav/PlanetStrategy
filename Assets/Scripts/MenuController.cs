@@ -33,9 +33,9 @@ public class MenuController : MonoBehaviour
             _menuButtons[_selectedButtonIndex].Select();
         }
 
-        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (Input.GetKeyDown(KeyCode.Return))
         {
-            _menuButtons[_selectedButtonIndex].Click();
+            _menuButtons[_selectedButtonIndex].onClick?.Invoke();
             
         }
     }
