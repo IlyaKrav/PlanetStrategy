@@ -15,6 +15,23 @@ public class NavigationItems : MonoBehaviour
     private int _selectedItemIndex;
     private int _itemsCount;
 
+    public void Enable(bool selectFirst)
+    {
+        _selectFirstItem = selectFirst;
+
+        enabled = true;
+    }
+
+    public void Disable(bool unselectItems)
+    {
+        enabled = false;
+
+        if (unselectItems)
+        {
+            UnselectItems();
+        }
+    }
+    
     private void OnEnable()
     {
         if (_selectFirstItem)

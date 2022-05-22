@@ -1,16 +1,16 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Planet : NavigationItem
+public class Planet : MonoBehaviour
 {
     private const float SPAWN_SHIPS_DELAY = 2f;
     
     [SerializeField] private GameController.PlanetType _planetType;
     [SerializeField] private int _shipsCount;
     [SerializeField] private NavigationItem _navigation;
-
+    [SerializeField] private ShipController _shipController;
+    
     [SerializeField] private GameObject _playerSelectCover;
     [SerializeField] private GameObject _enemySelectCover;
     [SerializeField] private GameObject _playerMark;
@@ -83,7 +83,7 @@ public class Planet : NavigationItem
             enemyShips -= _shipsCount;
             _shipsCount = enemyShips;
             
-            GameController.Instance.CapturePlanet(this);
+            ActionManager.Instance.CapturePlanet?.Invoke(this, attackerType);
             CapturePlanet(attackerType);
             _planetType = attackerType;
         }
@@ -96,9 +96,11 @@ public class Planet : NavigationItem
 
     public void SendShips(int shipsCount, Planet targetPlanet)
     {
+        _shipController.SendShips(targetPlanet, shipsCount);
         _shipsCount -= shipsCount;
         SetPlanetShipsCount();
-        targetPlanet.Attacked(shipsCount, GameController.PlanetType.Player);
+        
+        //targetPlanet.Attacked(shipsCount, GameController.PlanetType.Player);
     }
     
     public void SelectPlanet()
@@ -114,8 +116,8 @@ public class Planet : NavigationItem
                 if (GameController.Instance.SelectedPlanet != null)
                 {
                     var attackingPlanet = GameController.Instance.SelectedPlanet;
-                    var a = (float)attackingPlanet.ShipsCount / 10;//todo В константу!!
-                    var shipsCount =  (int)(a * GameController.Instance.SliderShipValue);
+                    var shipsInPercent = (float)attackingPlanet.ShipsCount / 10;//todo В константу!!
+                    var shipsCount = (int)Mathf.Ceil(shipsInPercent * GameController.Instance.SliderShipValue);
                     attackingPlanet.SendShips(shipsCount, this);
                 }
                             

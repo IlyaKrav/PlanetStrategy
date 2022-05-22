@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +6,7 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] private List<Planet> _playerPlanets;
     [SerializeField] private List<Planet> _enemyPlanets;
+    [SerializeField] private List<Planet> _neutralPlanets;
 
     [SerializeField] private NavigationItems _playerNavigation;
     [SerializeField] private NavigationItems _enemyNavigation;
@@ -45,25 +45,46 @@ public class GameController : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        ActionManager.Instance.CapturePlanet += OnCapturePlanet;
+    }
+
     private void Update()
     {
         UpdateWinSlider();
     }
 
-    public void CapturePlanet(Planet capturedPlanet)
+    private void OnCapturePlanet(Planet capturedPlanet, PlanetType attackerType)
     {
         _playerNavigation.AddItemToEnd(capturedPlanet.Navigation);
         _enemyNavigation.RemoveItem(capturedPlanet.Navigation);
         _enemyNavigation.SelectNextItem();
+
+        SetPlanetToAttacker(capturedPlanet, attackerType);
     }
 
+    public void SetPlanetToAttacker(Planet capturedPlanet, PlanetType attacker)
+    {
+        switch (attacker)
+        {
+            case PlanetType.Player:
+                _enemyPlanets.Remove(capturedPlanet);
+                _playerPlanets.Add(capturedPlanet);
+                break;
+            
+            case PlanetType.FirstEnemy:
+                _playerPlanets.Remove(capturedPlanet);
+                _enemyPlanets.Add(capturedPlanet);
+                break;
+        }
+    }
+    
     public void UnselectPlanets()
     {
-        _enemyNavigation.enabled = false;
-        _playerNavigation.enabled = true;
+        _enemyNavigation.Disable(true);
+        _playerNavigation.Enable(false);
         _selectedPlanet = null;
-
-        _enemyNavigation.UnselectItems();
     }
 
     private void UpdateWinSlider()
@@ -83,7 +104,12 @@ public class GameController : MonoBehaviour
 
         _winSlider.value = (totalPayerCount * 100) / (totalPayerCount + totalEnemyCount);
     }
-        
+
+    private void OnDestroy()
+    {
+        ActionManager.Instance.CapturePlanet -= OnCapturePlanet;
+    }
+
     public enum PlanetType
     {
         Empty,

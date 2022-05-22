@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 4161738289135000794}
   - component: {fileID: 4161738289135000792}
   - component: {fileID: 2261204817071991554}
+  - component: {fileID: 2888882508532897803}
   m_Layer: 0
   m_Name: Planet
   m_TagString: Untagged
@@ -200,6 +201,7 @@ MonoBehaviour:
   _planetType: 1
   _shipsCount: 0
   _navigation: {fileID: 2261204817071991554}
+  _shipController: {fileID: 2888882508532897803}
   _playerSelectCover: {fileID: 6306335398445718197}
   _enemySelectCover: {fileID: 6296161464666330561}
   _playerMark: {fileID: 2591657147378594580}
@@ -217,7 +219,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7e7fd36b6b5b8549909324162a59e61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _selectCover: {fileID: 6306335398445718197}
   onClick:
     m_PersistentCalls:
       m_Calls:
@@ -233,6 +234,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _selectCover: {fileID: 6306335398445718197}
+--- !u!114 &2888882508532897803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4161738289135000798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28b64f6e86c77c44a9b4fe2684351898, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shipPrefab: {fileID: 6285364293043806385, guid: 9574430fa15d8dd45836edbae2dbbb46, type: 3}
+  _shipParent: {fileID: 4161738289135000793}
 --- !u!1 &4170560820957182278
 GameObject:
   m_ObjectHideFlags: 0
