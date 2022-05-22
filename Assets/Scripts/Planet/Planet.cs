@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Planet : MonoBehaviour
+public class Planet : NavigationItem
 {
     private const float SPAWN_SHIPS_DELAY = 2f;
     

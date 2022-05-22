@@ -1,11 +1,18 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    [SerializeField] private List<Planet> _playerPlanets;
+    [SerializeField] private List<Planet> _enemyPlanets;
+
     [SerializeField] private NavigationItems _playerNavigation;
     [SerializeField] private NavigationItems _enemyNavigation;
 
     [SerializeField] private SliderShipsController _sliderShipsController;
+    [SerializeField] private Slider _winSlider;
     
     private static GameController _instance;
     
@@ -38,6 +45,11 @@ public class GameController : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        UpdateWinSlider();
+    }
+
     public void CapturePlanet(Planet capturedPlanet)
     {
         _playerNavigation.AddItemToEnd(capturedPlanet.Navigation);
@@ -54,6 +66,24 @@ public class GameController : MonoBehaviour
         _enemyNavigation.UnselectItems();
     }
 
+    private void UpdateWinSlider()
+    {
+        var totalPayerCount = 0;
+        var totalEnemyCount = 0;
+        
+        foreach (var planet in _playerPlanets)
+        {
+            totalPayerCount += planet.ShipsCount;
+        }
+        
+        foreach (var planet in _enemyPlanets)
+        {
+            totalEnemyCount += planet.ShipsCount;
+        }
+
+        _winSlider.value = (totalPayerCount * 100) / (totalPayerCount + totalEnemyCount);
+    }
+        
     public enum PlanetType
     {
         Empty,
