@@ -4,6 +4,8 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] private NavigationItems _playerNavigation;
     [SerializeField] private NavigationItems _enemyNavigation;
+
+    [SerializeField] private SliderShipsController _sliderShipsController;
     
     private static GameController _instance;
     
@@ -21,6 +23,8 @@ public class GameController : MonoBehaviour
             return _instance;
         }
     }
+
+    public float SliderShipValue => _sliderShipsController.SliderShipValue;
     
     public Planet SelectedPlanet
     {
@@ -38,6 +42,7 @@ public class GameController : MonoBehaviour
     {
         _playerNavigation.AddItemToEnd(capturedPlanet.Navigation);
         _enemyNavigation.RemoveItem(capturedPlanet.Navigation);
+        _enemyNavigation.SelectNextItem();
     }
 
     public void UnselectPlanets()
@@ -48,7 +53,7 @@ public class GameController : MonoBehaviour
 
         _enemyNavigation.UnselectItems();
     }
-    
+
     public enum PlanetType
     {
         Empty,

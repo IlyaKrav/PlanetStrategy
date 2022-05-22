@@ -12,7 +12,7 @@ public class NavigationItems : MonoBehaviour
     private int _selectedItemIndex;
     private int _itemsCount;
 
-    private void Start()
+    private void OnEnable()
     {
         if (_selectFirstItem)
         {
@@ -22,29 +22,27 @@ public class NavigationItems : MonoBehaviour
 
         _itemsCount = _items.Count;
     }
-    
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            _selectedItemIndex--;
-            CheckToggleIndexToOutOfRange();
-            SelectItem(_items[_selectedItemIndex]);
+            SelectPreviousItem();
         }
         
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            _selectedItemIndex++;
-            CheckToggleIndexToOutOfRange();
-            SelectItem(_items[_selectedItemIndex]);
+            SelectNextItem();
         }
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
+            if (_itemsCount == 0) return;
+
             _items[_selectedItemIndex].onClick?.Invoke();
         }
         
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             onBack?.Invoke();
         }
@@ -89,5 +87,26 @@ public class NavigationItems : MonoBehaviour
     {
         _items.Remove(item);
         _itemsCount = _items.Count;
+    }
+
+    public void SelectNextItem()
+    {
+        if (_itemsCount == 0)
+        {
+            return;
+        }
+        
+        _selectedItemIndex++;
+        CheckToggleIndexToOutOfRange();
+        SelectItem(_items[_selectedItemIndex]);
+    }
+    
+    public void SelectPreviousItem()
+    {
+        if (_itemsCount == 0) return;
+        
+        _selectedItemIndex--;
+        CheckToggleIndexToOutOfRange();
+        SelectItem(_items[_selectedItemIndex]);
     }
 }
