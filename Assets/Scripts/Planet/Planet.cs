@@ -109,12 +109,12 @@ public class Planet : MonoBehaviour
                 GameController.Instance.SelectedPlanet = this;
                             
                 break;
-            case GameController.PlanetType.FirstEnemy:
+            default:
                             
                 if (GameController.Instance.SelectedPlanet != null)
                 {
                     var attackingPlanet = GameController.Instance.SelectedPlanet;
-                    var a = (float)attackingPlanet.ShipsCount / 10;
+                    var a = (float)attackingPlanet.ShipsCount / 10;//todo В константу!!
                     var shipsCount =  (int)(a * GameController.Instance.SliderShipValue);
                     attackingPlanet.SendShips(shipsCount, this);
                 }

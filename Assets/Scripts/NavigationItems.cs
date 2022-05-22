@@ -6,6 +6,9 @@ public class NavigationItems : MonoBehaviour
 {
     public UnityEvent onBack;
 
+    [SerializeField] private KeyCode _selectItemKey = KeyCode.Return;
+    [SerializeField] private KeyCode _backKey = KeyCode.Escape;
+    
     [SerializeField] private List<NavigationItem> _items;
     [SerializeField] private bool _selectFirstItem;
     
@@ -35,14 +38,14 @@ public class NavigationItems : MonoBehaviour
             SelectNextItem();
         }
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(_selectItemKey))
         {
             if (_itemsCount == 0) return;
 
             _items[_selectedItemIndex].onClick?.Invoke();
         }
         
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(_backKey))
         {
             onBack?.Invoke();
         }
