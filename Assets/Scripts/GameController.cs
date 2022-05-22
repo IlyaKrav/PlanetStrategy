@@ -14,9 +14,9 @@ public class GameController : MonoBehaviour
     [SerializeField] private SliderShipsController _sliderShipsController;
     [SerializeField] private Slider _winSlider;
     
-    private static GameController _instance;
-    
     private Planet _selectedPlanet;
+    
+    private static GameController _instance;
 
     public static GameController Instance
     {

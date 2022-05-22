@@ -5,25 +5,25 @@ using UnityEngine.UI;
 public class Planet : MonoBehaviour
 {
     private const float SPAWN_SHIPS_DELAY = 2f;
-    
+
     [SerializeField] private GameController.PlanetType _planetType;
     [SerializeField] private int _shipsCount;
     [SerializeField] private NavigationItem _navigation;
     [SerializeField] private ShipController _shipController;
-    
+
     [SerializeField] private GameObject _playerSelectCover;
     [SerializeField] private GameObject _enemySelectCover;
     [SerializeField] private GameObject _playerMark;
     [SerializeField] private GameObject _enemyMark;
 
     [SerializeField] private Text _countShipText;
-    
+
     private bool _selectPlanet;
 
     public int ShipsCount => _shipsCount;
-    
+
     public NavigationItem Navigation => _navigation;
-    
+
     public GameController.PlanetType PlanetType
     {
         set => _planetType = value;
@@ -39,7 +39,7 @@ public class Planet : MonoBehaviour
                 _navigation.SelectCover = _playerSelectCover;
                 _playerMark.SetActive(true);
                 _enemyMark.SetActive(false);
-                            
+
                 break;
             case GameController.PlanetType.FirstEnemy:
                 _navigation.SelectCover = _enemySelectCover;
@@ -58,14 +58,14 @@ public class Planet : MonoBehaviour
     public void CapturePlanet(GameController.PlanetType captureType)
     {
         _navigation.SelectItem(false);
-        
+
         switch (captureType)
         {
             case GameController.PlanetType.Player:
                 _navigation.SelectCover = _playerSelectCover;
                 _playerMark.SetActive(true);
                 _enemyMark.SetActive(false);
-                            
+
                 break;
             case GameController.PlanetType.FirstEnemy:
                 _navigation.SelectCover = _enemySelectCover;
@@ -78,11 +78,17 @@ public class Planet : MonoBehaviour
 
     public void Attacked(int enemyShips, GameController.PlanetType attackerType)
     {
+        if (attackerType == _planetType)
+        {
+            _shipsCount += enemyShips;
+            return;
+        }
+
         if (enemyShips >= _shipsCount)
         {
             enemyShips -= _shipsCount;
             _shipsCount = enemyShips;
-            
+
             ActionManager.Instance.CapturePlanet?.Invoke(this, attackerType);
             CapturePlanet(attackerType);
             _planetType = attackerType;
@@ -91,6 +97,7 @@ public class Planet : MonoBehaviour
         {
             _shipsCount -= enemyShips;
         }
+
         SetPlanetShipsCount();
     }
 
@@ -99,28 +106,28 @@ public class Planet : MonoBehaviour
         _shipController.SendShips(targetPlanet, shipsCount);
         _shipsCount -= shipsCount;
         SetPlanetShipsCount();
-        
+
         //targetPlanet.Attacked(shipsCount, GameController.PlanetType.Player);
     }
-    
+
     public void SelectPlanet()
     {
         switch (_planetType)
         {
             case GameController.PlanetType.Player:
                 GameController.Instance.SelectedPlanet = this;
-                            
+
                 break;
             default:
-                            
+
                 if (GameController.Instance.SelectedPlanet != null)
                 {
                     var attackingPlanet = GameController.Instance.SelectedPlanet;
-                    var shipsInPercent = (float)attackingPlanet.ShipsCount / 10;//todo В константу!!
-                    var shipsCount = (int)Mathf.Ceil(shipsInPercent * GameController.Instance.SliderShipValue);
+                    var shipsInPercent = (float) attackingPlanet.ShipsCount / 10; //todo В константу!!
+                    var shipsCount = (int) Mathf.Ceil(shipsInPercent * GameController.Instance.SliderShipValue);
                     attackingPlanet.SendShips(shipsCount, this);
                 }
-                            
+
                 break;
         }
     }
@@ -141,7 +148,7 @@ public class Planet : MonoBehaviour
         {
             _shipsCount++;
             SetPlanetShipsCount();
-            
+
             yield return new WaitForSecondsRealtime(SPAWN_SHIPS_DELAY);
         }
     }

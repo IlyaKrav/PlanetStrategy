@@ -5,7 +5,6 @@ public class ShipController : MonoBehaviour
 {
     private const int SHIP_HEIGHT = 5;
 
-    [SerializeField] private GameObject _shipPrefab;
     [SerializeField] private Transform _shipParent;
 
     public void SendShips(Planet targetPlanet, int shipsCount)
@@ -15,14 +14,16 @@ public class ShipController : MonoBehaviour
         
         for (int i = 0; i < shipHeightCount; i++)
         {
-            var ship = Instantiate(_shipPrefab, _shipParent);
+            var ship = ShipPoolManager.Instance.GetShip();
+            ship.transform.SetParent(_shipParent);
             ship.transform.localPosition = new Vector2(Random.Range(0f, 0.5f), Random.Range(0f, 0.5f));
             StartCoroutine(MoveShipsAnimation(targetPlanet, ship, SHIP_HEIGHT));
         }
 
         if (lastShipHeight != 0)
         {
-            var ship = Instantiate(_shipPrefab, _shipParent);
+            var ship = ShipPoolManager.Instance.GetShip();
+            ship.transform.SetParent(_shipParent);
             ship.transform.localPosition = new Vector2(Random.Range(0f, 0.5f), Random.Range(0f, 0.5f));
             StartCoroutine(MoveShipsAnimation(targetPlanet, ship, lastShipHeight));
         }
@@ -47,7 +48,7 @@ public class ShipController : MonoBehaviour
             yield return null;
         }
         
-        ship.gameObject.SetActive(false);
+        ShipPoolManager.Instance.ReturnShip(ship);
         targetPlanet.Attacked(shipHeight, GameController.PlanetType.Player);
     }
 }
