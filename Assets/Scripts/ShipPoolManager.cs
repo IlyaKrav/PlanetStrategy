@@ -1,9 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ShipPoolManager : MonoBehaviour
 {
     [SerializeField] private Transform _poolParent;
-    [SerializeField] private GameObject _shipPrefab;
+    [SerializeField] private Ship _shipPrefab;
+
+    private List<Ship> _ships = new List<Ship>();
 
     private static ShipPoolManager _instance;
 
@@ -20,22 +23,24 @@ public class ShipPoolManager : MonoBehaviour
         }
     }
     
-    public GameObject GetShip()
+    public Ship GetShip()
     {
-        var shipCount = _poolParent.childCount;
+        var shipCount = _ships.Count;
 
-        GameObject ship;
+        Ship ship;
         
         if (shipCount > 0)
         {
-            ship = _poolParent.GetChild(0).gameObject;
+            ship = _ships[0];
+            _ships.Remove(ship);
         }
         else
         {
             ship = Instantiate(_shipPrefab, _poolParent);
+            _ships.Add(ship);
         }
         
-        ship.SetActive(true);
+        ship.gameObject.SetActive(true);
         return ship;
     }
 

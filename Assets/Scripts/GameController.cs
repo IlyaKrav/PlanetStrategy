@@ -4,17 +4,31 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    [SerializeField] private List<Planet> _playerPlanets;
-    [SerializeField] private List<Planet> _enemyPlanets;
-    [SerializeField] private List<Planet> _neutralPlanets;
+    [SerializeField] private List<PlayerController> _playersList;
 
     [SerializeField] private NavigationItems _playerNavigation;
     [SerializeField] private NavigationItems _enemyNavigation;
 
     [SerializeField] private SliderShipsController _sliderShipsController;
     [SerializeField] private Slider _winSlider;
-    
+
+    private Dictionary<PlayerType, PlayerController> _playersDictionary = new Dictionary<PlayerType, PlayerController>();
+
     private Planet _selectedPlanet;
+    
+    public float SliderShipValue => _sliderShipsController.SliderShipValue;
+    
+    public Planet SelectedPlanet
+    {
+        get => _selectedPlanet;
+        set
+        {
+            var enablePlayerNavigation = value == null;
+            _enemyNavigation.enabled = !enablePlayerNavigation;
+            _playerNavigation.enabled = enablePlayerNavigation;
+            _selectedPlanet = value;
+        }
+    }
     
     private static GameController _instance;
 
@@ -31,23 +45,14 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public float SliderShipValue => _sliderShipsController.SliderShipValue;
-    
-    public Planet SelectedPlanet
-    {
-        get => _selectedPlanet;
-        set
-        {
-            var enablePlayerNavigation = value == null;
-            _enemyNavigation.enabled = !enablePlayerNavigation;
-            _playerNavigation.enabled = enablePlayerNavigation;
-            _selectedPlanet = value;
-        }
-    }
-
     private void Start()
     {
         ActionManager.Instance.CapturePlanet += OnCapturePlanet;
+
+        foreach (var player in _playersList)
+        {
+            _playersDictionary.Add(player.PlayerType, player);
+        }
     }
 
     private void Update()
@@ -55,31 +60,71 @@ public class GameController : MonoBehaviour
         UpdateWinSlider();
     }
 
-    private void OnCapturePlanet(Planet capturedPlanet, PlanetType attackerType)
+    private void OnCapturePlanet(Planet capturedPlanet, PlayerType attackerType, PlayerType attacking)
     {
-        _playerNavigation.AddItemToEnd(capturedPlanet.Navigation);
-        _enemyNavigation.RemoveItem(capturedPlanet.Navigation);
-        _enemyNavigation.SelectNextItem();
+        if (attackerType == PlayerType.Player)
+        {
+            _playerNavigation.AddItemToEnd(capturedPlanet.Navigation);
+            _enemyNavigation.RemoveItem(capturedPlanet.Navigation);
+            _enemyNavigation.SelectNextItem();
+        }
 
-        SetPlanetToAttacker(capturedPlanet, attackerType);
+        if (!capturedPlanet.IsSpawnShips)
+        {
+            capturedPlanet.StartSpawnShips();
+        }
+        
+        SetPlanetToAttacker(capturedPlanet, attackerType, attacking);
     }
 
-    public void SetPlanetToAttacker(Planet capturedPlanet, PlanetType attacker)
+    public void SetPlanetToAttacker(Planet capturedPlanet, PlayerType attacker, PlayerType attacking)
     {
-        switch (attacker)
+        var player = _playersDictionary[attacker];
+        var enemy = _playersDictionary[attacking];
+        
+        player.Planets.Add(capturedPlanet);
+        enemy.Planets.Remove(capturedPlanet);
+
+        capturedPlanet.SetPlanetColor(player.PlanetsColor);
+
+        if (enemy.Planets.Count == 0)
         {
-            case PlanetType.Player:
-                _enemyPlanets.Remove(capturedPlanet);
-                _playerPlanets.Add(capturedPlanet);
-                break;
-            
-            case PlanetType.FirstEnemy:
-                _playerPlanets.Remove(capturedPlanet);
-                _enemyPlanets.Add(capturedPlanet);
-                break;
+            _playersList.Remove(enemy);
+            _playersDictionary.Remove(attacking);
         }
     }
-    
+
+    public void AttackRandomPlanet(Planet attackerPlanet, PlayerType attackerType, int shipsCount)
+    {
+        if (_playersList.Count == 1)
+        {
+            foreach (var player in _playersList)
+            {
+                if (player is BotController bot)
+                {
+                    bot.StopAllCoroutines();
+                }
+            }
+        }
+        
+        var temporaryPlayers = new List<PlayerController>();
+
+        foreach (var player in _playersList)
+        {
+            if (attackerType == player.PlayerType || player.Planets.Count == 0)
+            {
+                continue; 
+            }
+            
+            temporaryPlayers.Add(player);
+        }
+
+        var enemy = temporaryPlayers[Random.Range(0, temporaryPlayers.Count)];
+        var attackingPlanet = enemy.Planets[Random.Range(0, enemy.Planets.Count)];
+        
+        attackerPlanet.SendShips(shipsCount, attackingPlanet, attackerType);
+    }
+
     public void UnselectPlanets()
     {
         _enemyNavigation.Disable(true);
@@ -90,19 +135,27 @@ public class GameController : MonoBehaviour
     private void UpdateWinSlider()
     {
         var totalPayerCount = 0;
-        var totalEnemyCount = 0;
-        
-        foreach (var planet in _playerPlanets)
+        var totalEnemiesCount = 0;
+
+        foreach (var player in _playersList)
         {
-            totalPayerCount += planet.ShipsCount;
-        }
-        
-        foreach (var planet in _enemyPlanets)
-        {
-            totalEnemyCount += planet.ShipsCount;
+            if (player.PlayerType == PlayerType.Player)
+            {
+                foreach (var planet in player.Planets)
+                {
+                    totalPayerCount += planet.ShipsCount;
+                }
+            }
+            else
+            {
+                foreach (var planet in player.Planets)
+                {
+                    totalEnemiesCount += planet.ShipsCount;
+                }
+            }
         }
 
-        _winSlider.value = (totalPayerCount * 100) / (totalPayerCount + totalEnemyCount);
+        _winSlider.value = (totalPayerCount * 100) / (totalPayerCount + totalEnemiesCount);
     }
 
     private void OnDestroy()
@@ -110,9 +163,9 @@ public class GameController : MonoBehaviour
         ActionManager.Instance.CapturePlanet -= OnCapturePlanet;
     }
 
-    public enum PlanetType
+    public enum PlayerType
     {
-        Empty,
+        Neutral,
         Player,
         FirstEnemy
     }

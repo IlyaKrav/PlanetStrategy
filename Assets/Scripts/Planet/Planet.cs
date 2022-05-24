@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,79 +7,74 @@ public class Planet : MonoBehaviour
 {
     private const float SPAWN_SHIPS_DELAY = 2f;
 
-    [SerializeField] private GameController.PlanetType _planetType;
+    [SerializeField] private GameController.PlayerType _playerType;
     [SerializeField] private int _shipsCount;
     [SerializeField] private NavigationItem _navigation;
-    [SerializeField] private ShipController _shipController;
+    [SerializeField] private ShipsController shipsController;
 
-    [SerializeField] private GameObject _playerSelectCover;
-    [SerializeField] private GameObject _enemySelectCover;
-    [SerializeField] private GameObject _playerMark;
-    [SerializeField] private GameObject _enemyMark;
+    [SerializeField] private SpriteRenderer _planetRenderer;
 
     [SerializeField] private Text _countShipText;
 
+    [SerializeField] private bool _spawnShips = true;
+    
     private bool _selectPlanet;
 
     public int ShipsCount => _shipsCount;
 
+    public bool IsSpawnShips => _spawnShips;
+    
     public NavigationItem Navigation => _navigation;
 
-    public GameController.PlanetType PlanetType
+    public GameController.PlayerType PlayerType
     {
-        set => _planetType = value;
+        get => _playerType;
+        set => _playerType = value;
     }
 
     private void Start()
     {
-        StartSpawnShips();
-
-        switch (_planetType)
+        if (_spawnShips)
         {
-            case GameController.PlanetType.Player:
-                _navigation.SelectCover = _playerSelectCover;
-                _playerMark.SetActive(true);
-                _enemyMark.SetActive(false);
-
-                break;
-            case GameController.PlanetType.FirstEnemy:
-                _navigation.SelectCover = _enemySelectCover;
-                _playerMark.SetActive(false);
-                _enemyMark.SetActive(true);
-
-                break;
-            default:
-                _navigation.SelectCover = _enemySelectCover;
-                _playerMark.SetActive(false);
-                _enemyMark.SetActive(false);
-                break;
+            StartSpawnShips();
         }
     }
 
-    public void CapturePlanet(GameController.PlanetType captureType)
+    public void Init(GameController.PlayerType playerType, Color planetColor)
     {
-        _navigation.SelectItem(false);
-
-        switch (captureType)
-        {
-            case GameController.PlanetType.Player:
-                _navigation.SelectCover = _playerSelectCover;
-                _playerMark.SetActive(true);
-                _enemyMark.SetActive(false);
-
-                break;
-            case GameController.PlanetType.FirstEnemy:
-                _navigation.SelectCover = _enemySelectCover;
-                _playerMark.SetActive(false);
-                _enemyMark.SetActive(true);
-
-                break;
-        }
+        _playerType = playerType;
+        SetPlanetColor(planetColor);
     }
 
-    public void Attacked(int enemyShips, GameController.PlanetType attackerType)
+    public void SetPlanetColor(Color planetColor)
     {
-        if (attackerType == _planetType)
+        _planetRenderer.color = planetColor;
+    }
+    
+    public void CapturePlanet(GameController.PlayerType captureType)
+    {
+        // _navigation.SelectItem(false);
+
+        // switch (captureType)
+        // {
+        //     case GameController.PlayerType.Player:
+        //         _navigation.SelectCover = _playerSelectCover;
+        //         _playerMark.SetActive(true);
+        //         _enemyMark.SetActive(false);
+        //
+        //         break;
+        //     case GameController.PlayerType.FirstEnemy:
+        //         _navigation.SelectCover = _enemySelectCover;
+        //         _playerMark.SetActive(false);
+        //         _enemyMark.SetActive(true);
+        //
+        //         break;
+        // }
+    }
+
+    public void Attacked(int enemyShips, GameController.PlayerType attackerType)
+    {
+        if (attackerType == _playerType)
         {
             _shipsCount += enemyShips;
             return;
@@ -89,9 +85,9 @@ public class Planet : MonoBehaviour
             enemyShips -= _shipsCount;
             _shipsCount = enemyShips;
 
-            ActionManager.Instance.CapturePlanet?.Invoke(this, attackerType);
+            ActionManager.Instance.CapturePlanet?.Invoke(this, attackerType, _playerType);
             CapturePlanet(attackerType);
-            _planetType = attackerType;
+            _playerType = attackerType;
         }
         else
         {
@@ -101,20 +97,19 @@ public class Planet : MonoBehaviour
         SetPlanetShipsCount();
     }
 
-    public void SendShips(int shipsCount, Planet targetPlanet)
+    public void SendShips(int shipsCount, Planet targetPlanet, GameController.PlayerType attaker)
     {
-        _shipController.SendShips(targetPlanet, shipsCount);
+        shipsController.SendShips(targetPlanet, shipsCount, attaker, _planetRenderer.color);
+        
         _shipsCount -= shipsCount;
         SetPlanetShipsCount();
-
-        //targetPlanet.Attacked(shipsCount, GameController.PlanetType.Player);
     }
 
     public void SelectPlanet()
     {
-        switch (_planetType)
+        switch (_playerType)
         {
-            case GameController.PlanetType.Player:
+            case GameController.PlayerType.Player:
                 GameController.Instance.SelectedPlanet = this;
 
                 break;
@@ -122,10 +117,10 @@ public class Planet : MonoBehaviour
 
                 if (GameController.Instance.SelectedPlanet != null)
                 {
-                    var attackingPlanet = GameController.Instance.SelectedPlanet;
-                    var shipsInPercent = (float) attackingPlanet.ShipsCount / 10; //todo В константу!!
-                    var shipsCount = (int) Mathf.Ceil(shipsInPercent * GameController.Instance.SliderShipValue);
-                    attackingPlanet.SendShips(shipsCount, this);
+                    var attackerPlanet = GameController.Instance.SelectedPlanet;
+                    var shipsInPercent = (float) attackerPlanet.ShipsCount / 10; //todo В константу!!
+                    var shipsCount = (int)Mathf.Ceil(shipsInPercent * GameController.Instance.SliderShipValue);
+                    attackerPlanet.SendShips(shipsCount, this, attackerPlanet.PlayerType);
                 }
 
                 break;
@@ -137,8 +132,9 @@ public class Planet : MonoBehaviour
         _countShipText.text = _shipsCount.ToString();
     }
 
-    private void StartSpawnShips()
+    public void StartSpawnShips()
     {
+        _spawnShips = true;
         StartCoroutine(SpawnShips());
     }
 

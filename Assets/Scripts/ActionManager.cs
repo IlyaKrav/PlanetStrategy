@@ -1,9 +1,10 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class ActionManager : MonoBehaviour
 {
-    public UnityAction<Planet, GameController.PlanetType> CapturePlanet;
+    public UnityAction<Planet, GameController.PlayerType, GameController.PlayerType> CapturePlanet;
 
     public static ActionManager Instance;
     
@@ -14,5 +15,10 @@ public class ActionManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
+    }
+
+    private void OnDestroy()
+    {
+        CapturePlanet = null;
     }
 }
