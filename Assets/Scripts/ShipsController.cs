@@ -29,7 +29,8 @@ public class ShipsController : MonoBehaviour
             var ship = ShipPoolManager.Instance.GetShip();
             ship.SetColor(shipColor);
             ship.transform.SetParent(_shipParent);
-            ship.transform.localPosition = new Vector2(Random.Range(0f, 0.5f), Random.Range(0f, 0.5f));
+            // ship.transform.localPosition = new Vector2(Random.Range(0f, 0.5f), Random.Range(0f, 0.5f));
+            ship.transform.localPosition = Vector2.zero;
             StartCoroutine(MoveShipsAnimation(targetPlanet, ship, lastShipHeight, attacker));
         }
     }
@@ -40,12 +41,14 @@ public class ShipsController : MonoBehaviour
         var period = 5f;//todo В константу!
         var startPos = (Vector2)ship.transform.position;
         var targetPosition = targetPlanet.transform.position;
-        var endPos = new Vector2(targetPosition.x + Random.Range(0f, 0.5f), targetPosition.y); 
-        
-        var k = (endPos.y - startPos.y) / (endPos.x - startPos.x);
-        var p = startPos.y - k * startPos.x;
+        // var endPos = new Vector2(targetPosition.x + Random.Range(0f, 0.5f), targetPosition.y); 
+        var endPos = new Vector2(targetPosition.x, targetPosition.y);
 
-        _test.StartSh(k, p);
+        var k = (startPos.y - endPos.y) / (startPos.x - endPos.x);
+
+        var b = endPos.y- k * endPos.x;
+
+        _test.CalculatePoints(k, b);
 
         while (time < period)
         {

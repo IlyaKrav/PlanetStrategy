@@ -3,76 +3,37 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-     /*Circle properties*/
-        public float x0, y0, r;
-        /*Line properties*/
-        public float k, p;
+    [SerializeField] private List<Planet> _planets;
 
-        [SerializeField] private List<Planet> _planets;
-
-        public void StartSh(float k, float p)
+    public void CalculatePoints(float kk, float pp)
+    {
+        foreach (var planet in _planets)
         {
-            this.k = k;
-            this.p = p;
+            var a = planet.transform.position.x;
+            var b = planet.transform.position.y;
+            var r = planet.transform.localScale.x;
 
-            foreach (var planet in _planets)
-            {
-                x0 = planet.transform.position.x;
-                y0 = planet.transform.position.y;
+            var k = kk;
+            var p = pp;
 
-                r = planet.transform.localScale.x / 2;
-                
-                Main();
-            }
+            var A = (1 + k * k);
+            var B = -2 * a + 2 * k * p - 2 * k * b;
+            var C = a * a + p * p - 2 * p * b + b * b - r * r;
+
+            var D = B * B - 4 * A * C;
+            var Dsqrt = Mathf.Sqrt(D);
+        
+            var x1 = (-B + Dsqrt)/(2 * A);
+            var x2 = (-B - Dsqrt)/(2 * A);
+
+            var y1 = k * x1 + p;
+            var y2 = k * x2 + p;
+        
+            Debug.LogError(planet.transform.name);
+            Debug.LogError("1 = " + x1 + " " + y1);
+            Debug.LogError("2 = " + x2 + " " + y2);
         }
         
-        public void Main()
-        {
-            float a = square(k) + 1;
-            float b = 2 * (k * (p - y0) - x0);
-            float c = square(b - y0) + square(x0) - square(r);
- 
-            float x1, x2;
-            if (trySolutionSquareEquation(a, b, c, out x1, out x2))
-            {
-                Debug.Log($"First point : [{x1};{y(x1)}]");
-                Debug.Log($"Second point : [{0};{1}], x2, y(x2)");
-            }
-            else
-            {
-                Debug.Log("Equation not have solution");                
-            }
-        }
- 
-        /*Function of line*/
-        private float y(float x)
-        {
-            return k * x + p;
-        }
- 
-        /*Get square of value*/
-        private float square(float value)
-        {
-            return Mathf.Pow(value, 2);
-        }
- 
-        /*Solving equation*/
-        private bool trySolutionSquareEquation(float a, float b, float c, out float x1, out float x2)
-        {
-            x1 = float.NaN;
-            x2 = float.NaN;
 
-            float discriminant = b * b - 4 * a * c;
-            if (discriminant < 0)
-            {
-                return false;
-            }
- 
-            float k = -b / 2 * a;
-            discriminant /= 2 * a;
-            x1 = k - Mathf.Sqrt(discriminant);
-            x2 = k + Mathf.Sqrt(discriminant);
- 
-            return true;
-        }
+    }
 }
