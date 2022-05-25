@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
@@ -82,7 +83,7 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        UpdateWinSlider();
+        CountTotalShips();
     }
 
     private void OnCapturePlanet(Planet capturedPlanet, PlayerType attackerType, PlayerType attacking)
@@ -161,6 +162,11 @@ public class GameController : MonoBehaviour
             temporaryPlayers.Add(player);
         }
 
+        if (temporaryPlayers.Count == 0)
+        {
+            return;
+        }
+
         var enemy = temporaryPlayers[Random.Range(0, temporaryPlayers.Count)];
         var attackingPlanet = enemy.Planets[Random.Range(0, enemy.Planets.Count)];
 
@@ -175,7 +181,7 @@ public class GameController : MonoBehaviour
         _selectedPlanet = null;
     }
 
-    private void UpdateWinSlider()
+    private void CountTotalShips()
     {
         var totalPayerCount = 0;
         var totalEnemiesCount = 0;
@@ -198,6 +204,29 @@ public class GameController : MonoBehaviour
             }
         }
 
+        CheckWinner(totalPayerCount, totalEnemiesCount);
+        UpdateWinSlider(totalPayerCount, totalEnemiesCount);
+    }
+
+    private void CheckWinner(float totalPayerCount, float totalEnemiesCount)
+    {
+        if (totalPayerCount == 0)
+        {
+            SceneManager.LoadSceneAsync("LoseWindow", LoadSceneMode.Additive);
+            enabled = false;
+            return;
+        }
+        
+        if (totalEnemiesCount == 0)
+        {
+            SceneManager.LoadSceneAsync("WinWindow", LoadSceneMode.Additive);
+            enabled = false;
+            return;
+        }
+    }
+    
+    private void UpdateWinSlider(float totalPayerCount, float totalEnemiesCount)
+    {
         _winSlider.value = (totalPayerCount * 100) / (totalPayerCount + totalEnemiesCount);
     }
 

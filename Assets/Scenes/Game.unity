@@ -160,7 +160,7 @@ Transform:
   - {fileID: 1228092514}
   - {fileID: 1840678174}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &327038971
 GameObject:
@@ -458,7 +458,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &694586996
 GameObject:
@@ -1539,6 +1539,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Planet (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6575388263894926612, guid: f46b4f0711d34684bab4e96159246680, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1854803252}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f46b4f0711d34684bab4e96159246680, type: 3}
 --- !u!224 &1473417154 stripped
@@ -1634,8 +1638,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 307801919
+  m_SortingOrder: 3
   m_TargetDisplay: 0
 --- !u!224 &1514208676
 RectTransform:
@@ -1652,7 +1656,7 @@ RectTransform:
   - {fileID: 694586997}
   - {fileID: 1449284022}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1771,6 +1775,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Planet (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6575388263894926612, guid: f46b4f0711d34684bab4e96159246680, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1854803252}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f46b4f0711d34684bab4e96159246680, type: 3}
 --- !u!224 &1667609630 stripped
@@ -2070,6 +2078,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4161738289135000792, guid: f46b4f0711d34684bab4e96159246680, type: 3}
+      propertyPath: _shipsCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4161738289135000792, guid: f46b4f0711d34684bab4e96159246680, type: 3}
+      propertyPath: _spawnShips
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4161738289135000792, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: _startSpawnShips
       value: 1
       objectReference: {fileID: 0}
@@ -2161,6 +2177,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Planet (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6575388263894926612, guid: f46b4f0711d34684bab4e96159246680, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1854803252}
+    - target: {fileID: 8829385528492393777, guid: f46b4f0711d34684bab4e96159246680, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8829385528492393777, guid: f46b4f0711d34684bab4e96159246680, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f46b4f0711d34684bab4e96159246680, type: 3}
 --- !u!224 &1957328987 stripped
@@ -2192,7 +2220,7 @@ PrefabInstance:
       objectReference: {fileID: 1606121252}
     - target: {fileID: 4161738289135000792, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: _shipsCount
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4161738289135000792, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: _startSpawnShips
@@ -2290,6 +2318,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6575388263894926612, guid: f46b4f0711d34684bab4e96159246680, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1854803252}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f46b4f0711d34684bab4e96159246680, type: 3}
 --- !u!114 &4161738290068974592 stripped

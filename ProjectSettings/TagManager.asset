@@ -41,3 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Planet
+    uniqueID: 2138562805
+    locked: 0
+  - name: GameInterface
+    uniqueID: 307801919
+    locked: 0
+  - name: Window
+    uniqueID: 2551455
+    locked: 0
+  - name: WindowAboveWindow
+    uniqueID: 3671404357
+    locked: 0

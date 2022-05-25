@@ -55,6 +55,7 @@ public class Planet : MonoBehaviour
         if (attackerType == _playerType)
         {
             _shipsCount += enemyShips;
+            SetPlanetShipsCount();
             return;
         }
 
