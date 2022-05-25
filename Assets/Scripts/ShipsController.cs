@@ -18,7 +18,7 @@ public class ShipsController : MonoBehaviour
             ship.SetColor(shipColor);
             ship.transform.SetParent(_shipParent);
             ship.transform.localPosition = new Vector2(Random.Range(0f, 0.5f), Random.Range(0f, 0.5f));
-            StartCoroutine(MoveShipsAnimation(targetPlanet, ship.gameObject, SHIP_HEIGHT, attacker));
+            StartCoroutine(MoveShipsAnimation(targetPlanet, ship, SHIP_HEIGHT, attacker));
         }
 
         if (lastShipHeight != 0)
@@ -27,11 +27,11 @@ public class ShipsController : MonoBehaviour
             ship.SetColor(shipColor);
             ship.transform.SetParent(_shipParent);
             ship.transform.localPosition = new Vector2(Random.Range(0f, 0.5f), Random.Range(0f, 0.5f));
-            StartCoroutine(MoveShipsAnimation(targetPlanet, ship.gameObject, lastShipHeight, attacker));
+            StartCoroutine(MoveShipsAnimation(targetPlanet, ship, lastShipHeight, attacker));
         }
     }
 
-    private IEnumerator MoveShipsAnimation(Planet targetPlanet, GameObject ship, int shipHeight, GameController.PlayerType attacker)
+    private IEnumerator MoveShipsAnimation(Planet targetPlanet, Ship ship, int shipHeight, GameController.PlayerType attacker)
     {
         var time = 0f;
         var period = 5f;//todo В константу!

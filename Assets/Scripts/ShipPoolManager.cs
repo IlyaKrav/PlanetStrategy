@@ -37,16 +37,16 @@ public class ShipPoolManager : MonoBehaviour
         else
         {
             ship = Instantiate(_shipPrefab, _poolParent);
-            _ships.Add(ship);
         }
         
         ship.gameObject.SetActive(true);
         return ship;
     }
 
-    public void ReturnShip(GameObject ship)
+    public void ReturnShip(Ship ship)
     {
-        ship.SetActive(false);
+        ship.gameObject.SetActive(false);
+        _ships.Add(ship);
         ship.transform.SetParent(_poolParent);
     }
 }

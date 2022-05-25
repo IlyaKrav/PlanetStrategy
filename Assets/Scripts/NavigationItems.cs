@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,15 +11,16 @@ public class NavigationItems : MonoBehaviour
     [SerializeField] private KeyCode _backKey = KeyCode.Escape;
     
     [SerializeField] private List<NavigationItem> _items;
-    [SerializeField] private bool _selectFirstItem;
-    
+    [SerializeField] private bool _selectFirstItemOnStart;
+
+    [SerializeField] private Color _selectorColor;
+
+    private bool _onEnableAvailable;
     private int _selectedItemIndex;
     private int _itemsCount;
 
-    public void Enable(bool selectFirst)
+    public void Enable()
     {
-        _selectFirstItem = selectFirst;
-
         enabled = true;
     }
 
@@ -31,10 +33,15 @@ public class NavigationItems : MonoBehaviour
             UnselectItems();
         }
     }
-    
-    private void OnEnable()
+
+    public void Init()
     {
-        if (_selectFirstItem)
+        foreach (var item in _items)
+        {
+            item.SetColorToSelector(_selectorColor);
+        }
+        
+        if (_selectFirstItemOnStart)
         {
             _selectedItemIndex = 0;
             _items[_selectedItemIndex].SelectItem(true);
@@ -43,16 +50,21 @@ public class NavigationItems : MonoBehaviour
         _itemsCount = _items.Count;
     }
 
+    public void SelectFirstItem()
+    {
+        _items[0].SelectItem(true);
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            SelectPreviousItem();
+            OnKeySelectPreviousItem();
         }
         
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            SelectNextItem();
+            OnKeySelectNextItem();
         }
 
         if (Input.GetKeyDown(_selectItemKey))
@@ -83,6 +95,11 @@ public class NavigationItems : MonoBehaviour
             item.SelectItem(false);
         }
     }
+
+    public void UnselectItem(NavigationItem item)
+    {
+        item.SelectItem(false);
+    }
     
     private void CheckToggleIndexToOutOfRange()
     {
@@ -99,6 +116,7 @@ public class NavigationItems : MonoBehaviour
 
     public void AddItemToEnd(NavigationItem item)
     {
+        item.SetColorToSelector(_selectorColor);
         _items.Add(item);
         _itemsCount = _items.Count;
     }
@@ -111,7 +129,20 @@ public class NavigationItems : MonoBehaviour
 
     public void SelectNextItem()
     {
-        if (_itemsCount == 0)
+        if (_itemsCount <= 1)
+        {
+            UnselectItems();
+            return;
+        }
+        
+        _selectedItemIndex++;
+        CheckToggleIndexToOutOfRange();
+        SelectItem(_items[_selectedItemIndex]);
+    }
+    
+    public void OnKeySelectNextItem()
+    {
+        if (_itemsCount <= 0)
         {
             return;
         }
@@ -121,7 +152,7 @@ public class NavigationItems : MonoBehaviour
         SelectItem(_items[_selectedItemIndex]);
     }
     
-    public void SelectPreviousItem()
+    public void OnKeySelectPreviousItem()
     {
         if (_itemsCount == 0) return;
         

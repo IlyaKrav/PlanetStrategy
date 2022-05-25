@@ -5,15 +5,17 @@ public class NavigationItem : MonoBehaviour
 {
     public UnityEvent onClick;
 
-    [SerializeField] private GameObject _selectCover;
+    [SerializeField] private SpriteRenderer _selectCover;
 
-    public GameObject SelectCover
+    public bool IsSelected => _selectCover.gameObject.activeSelf;
+
+    public void SetColorToSelector(Color color)
     {
-        set => _selectCover = value;
+        _selectCover.color = color;
     }
-   
+
     public void SelectItem(bool isOn)
     {
-        _selectCover.SetActive(isOn);
+        _selectCover.gameObject.SetActive(isOn);
     }
 }

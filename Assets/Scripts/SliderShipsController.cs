@@ -10,12 +10,12 @@ public class SliderShipsController : MonoBehaviour
     
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             _slider.value++;
         }
         
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             _slider.value--;
         }

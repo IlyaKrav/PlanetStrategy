@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,18 +7,19 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] private List<PlayerController> _playersList;
 
-    [SerializeField] private NavigationItems _playerNavigation;
+    [SerializeField] private NavigationItems _userNavigation;
     [SerializeField] private NavigationItems _enemyNavigation;
 
     [SerializeField] private SliderShipsController _sliderShipsController;
     [SerializeField] private Slider _winSlider;
 
-    private Dictionary<PlayerType, PlayerController> _playersDictionary = new Dictionary<PlayerType, PlayerController>();
+    private Dictionary<PlayerType, PlayerController>
+        _playersDictionary = new Dictionary<PlayerType, PlayerController>();
 
     private Planet _selectedPlanet;
-    
+
     public float SliderShipValue => _sliderShipsController.SliderShipValue;
-    
+
     public Planet SelectedPlanet
     {
         get => _selectedPlanet;
@@ -25,11 +27,17 @@ public class GameController : MonoBehaviour
         {
             var enablePlayerNavigation = value == null;
             _enemyNavigation.enabled = !enablePlayerNavigation;
-            _playerNavigation.enabled = enablePlayerNavigation;
+            _userNavigation.enabled = enablePlayerNavigation;
+
+            if (!enablePlayerNavigation)
+            {
+                _enemyNavigation.SelectFirstItem();
+            }
+
             _selectedPlanet = value;
         }
     }
-    
+
     private static GameController _instance;
 
     public static GameController Instance
@@ -51,8 +59,25 @@ public class GameController : MonoBehaviour
 
         foreach (var player in _playersList)
         {
+            if (player.PlayerType == PlayerType.Player)
+            {
+                foreach (var planet in player.Planets)
+                {
+                    _userNavigation.AddItemToEnd(planet.Navigation);
+                }
+            }
+            else
+            {
+                foreach (var planet in player.Planets)
+                {
+                    _enemyNavigation.AddItemToEnd(planet.Navigation);
+                }
+            }
+
             _playersDictionary.Add(player.PlayerType, player);
         }
+
+        _userNavigation.Init();
     }
 
     private void Update()
@@ -62,18 +87,41 @@ public class GameController : MonoBehaviour
 
     private void OnCapturePlanet(Planet capturedPlanet, PlayerType attackerType, PlayerType attacking)
     {
-        if (attackerType == PlayerType.Player)
+        var planetNavigation = capturedPlanet.Navigation;
+
+        if (attacking == PlayerType.Player && attackerType == PlayerType.Player)
         {
-            _playerNavigation.AddItemToEnd(capturedPlanet.Navigation);
-            _enemyNavigation.RemoveItem(capturedPlanet.Navigation);
-            _enemyNavigation.SelectNextItem();
+            //nothing
+        }
+        else if (attackerType == PlayerType.Player)
+        {
+            _userNavigation.AddItemToEnd(planetNavigation);
+            _enemyNavigation.RemoveItem(planetNavigation);
+
+            if (planetNavigation.IsSelected)
+            {
+                if (attacking != PlayerType.Player)
+                {
+                    _enemyNavigation.UnselectItem(planetNavigation);
+                }
+            }
+        }
+        else if (attacking == PlayerType.Player)
+        {
+            if (planetNavigation.IsSelected)
+            {
+                _userNavigation.SelectNextItem();
+            }
+
+            _enemyNavigation.AddItemToEnd(planetNavigation);
+            _userNavigation.RemoveItem(planetNavigation);
         }
 
         if (!capturedPlanet.IsSpawnShips)
         {
             capturedPlanet.StartSpawnShips();
         }
-        
+
         SetPlanetToAttacker(capturedPlanet, attackerType, attacking);
     }
 
@@ -81,17 +129,11 @@ public class GameController : MonoBehaviour
     {
         var player = _playersDictionary[attacker];
         var enemy = _playersDictionary[attacking];
-        
+
         player.Planets.Add(capturedPlanet);
         enemy.Planets.Remove(capturedPlanet);
 
         capturedPlanet.SetPlanetColor(player.PlanetsColor);
-
-        if (enemy.Planets.Count == 0)
-        {
-            _playersList.Remove(enemy);
-            _playersDictionary.Remove(attacking);
-        }
     }
 
     public void AttackRandomPlanet(Planet attackerPlanet, PlayerType attackerType, int shipsCount)
@@ -106,29 +148,30 @@ public class GameController : MonoBehaviour
                 }
             }
         }
-        
+
         var temporaryPlayers = new List<PlayerController>();
 
         foreach (var player in _playersList)
         {
             if (attackerType == player.PlayerType || player.Planets.Count == 0)
             {
-                continue; 
+                continue;
             }
-            
+
             temporaryPlayers.Add(player);
         }
 
         var enemy = temporaryPlayers[Random.Range(0, temporaryPlayers.Count)];
         var attackingPlanet = enemy.Planets[Random.Range(0, enemy.Planets.Count)];
-        
+
         attackerPlanet.SendShips(shipsCount, attackingPlanet, attackerType);
     }
 
-    public void UnselectPlanets()
+    public void UnselectEnemiesPlanets()
     {
         _enemyNavigation.Disable(true);
-        _playerNavigation.Enable(false);
+        _userNavigation.Enable();
+        _userNavigation.SelectFirstItem();
         _selectedPlanet = null;
     }
 
@@ -146,7 +189,7 @@ public class GameController : MonoBehaviour
                     totalPayerCount += planet.ShipsCount;
                 }
             }
-            else
+            else if (player.PlayerType != PlayerType.Neutral)
             {
                 foreach (var planet in player.Planets)
                 {
@@ -167,6 +210,10 @@ public class GameController : MonoBehaviour
     {
         Neutral,
         Player,
-        FirstEnemy
+        EnemyOne,
+        EnemyTwo,
+        EnemyThree,
+        EnemyFour,
+        EnemyFive
     }
 }

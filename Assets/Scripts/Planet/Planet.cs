@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -50,27 +49,6 @@ public class Planet : MonoBehaviour
     {
         _planetRenderer.color = planetColor;
     }
-    
-    public void CapturePlanet(GameController.PlayerType captureType)
-    {
-        // _navigation.SelectItem(false);
-
-        // switch (captureType)
-        // {
-        //     case GameController.PlayerType.Player:
-        //         _navigation.SelectCover = _playerSelectCover;
-        //         _playerMark.SetActive(true);
-        //         _enemyMark.SetActive(false);
-        //
-        //         break;
-        //     case GameController.PlayerType.FirstEnemy:
-        //         _navigation.SelectCover = _enemySelectCover;
-        //         _playerMark.SetActive(false);
-        //         _enemyMark.SetActive(true);
-        //
-        //         break;
-        // }
-    }
 
     public void Attacked(int enemyShips, GameController.PlayerType attackerType)
     {
@@ -86,7 +64,6 @@ public class Planet : MonoBehaviour
             _shipsCount = enemyShips;
 
             ActionManager.Instance.CapturePlanet?.Invoke(this, attackerType, _playerType);
-            CapturePlanet(attackerType);
             _playerType = attackerType;
         }
         else
@@ -111,7 +88,7 @@ public class Planet : MonoBehaviour
         {
             case GameController.PlayerType.Player:
                 GameController.Instance.SelectedPlanet = this;
-
+                
                 break;
             default:
 
