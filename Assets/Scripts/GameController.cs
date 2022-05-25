@@ -204,7 +204,7 @@ public class GameController : MonoBehaviour
             }
         }
 
-        CheckWinner(totalPayerCount, totalEnemiesCount);
+        //CheckWinner(totalPayerCount, totalEnemiesCount);
         UpdateWinSlider(totalPayerCount, totalEnemiesCount);
     }
 

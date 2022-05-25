@@ -7,8 +7,11 @@ public class ShipsController : MonoBehaviour
 
     [SerializeField] private Transform _shipParent;
 
+    [SerializeField] private Test _test;
+    
     public void SendShips(Planet targetPlanet, int shipsCount, GameController.PlayerType attacker, Color shipColor)
     {
+
         var shipHeightCount = (int)(shipsCount / SHIP_HEIGHT);
         var lastShipHeight = shipsCount % SHIP_HEIGHT;
         
@@ -37,13 +40,18 @@ public class ShipsController : MonoBehaviour
         var period = 5f;//todo В константу!
         var startPos = (Vector2)ship.transform.position;
         var targetPosition = targetPlanet.transform.position;
-        var endPosition = new Vector2(targetPosition.x + Random.Range(0f, 0.5f), targetPosition.y); 
+        var endPos = new Vector2(targetPosition.x + Random.Range(0f, 0.5f), targetPosition.y); 
+        
+        var k = (endPos.y - startPos.y) / (endPos.x - startPos.x);
+        var p = startPos.y - k * startPos.x;
+
+        _test.StartSh(k, p);
 
         while (time < period)
         {
             time += Time.deltaTime;
             var lTime = time / period;
-            var lPos = Vector2.Lerp(startPos, endPosition, lTime);
+            var lPos = Vector2.Lerp(startPos, endPos, lTime);
             ship.transform.position = lPos;
 
             yield return null;
