@@ -11,7 +11,7 @@ public class SoundController : MonoBehaviour
 
     public static SoundController Instance = null;
 
-    void Start()
+    void Awake()
     {
         if (Instance == null)
         {

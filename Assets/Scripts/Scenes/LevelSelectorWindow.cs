@@ -11,6 +11,7 @@ public class LevelSelectorWindow : GUIScreens
     void Start()
     {
         Init();
+        SaveManager.Instance.Init(_levelsPrefabs);
     }
 
     private void Init()
@@ -32,6 +33,6 @@ public class LevelSelectorWindow : GUIScreens
 
     public void OnBack()
     {
-        UIController.OpenScene("Menu");
+        UIController.OpenScene("StartScene");
     }
 }

@@ -14,6 +14,6 @@ public class LoseWindow : GUIScreens
     
     public void OnBackButton()
     {
-        UIController.OpenScene("Menu");
+        UIController.OpenScene("StartScene");
     }
 }
