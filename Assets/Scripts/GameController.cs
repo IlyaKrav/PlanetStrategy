@@ -21,6 +21,21 @@ public class GameController : MonoBehaviour
 
     public float SliderShipValue => _sliderShipsController.SliderShipValue;
 
+    public List<Planet> AllPlanets
+    {
+        get
+        {
+            var allPlanets = new List<Planet>();
+
+            foreach (var player in _playersList)
+            {
+                allPlanets.AddRange(player.Planets);
+            }
+            
+            return allPlanets;
+        }  
+    }
+
     public Planet SelectedPlanet
     {
         get => _selectedPlanet;

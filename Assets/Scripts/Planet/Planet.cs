@@ -77,7 +77,11 @@ public class Planet : MonoBehaviour
 
     public void SendShips(int shipsCount, Planet targetPlanet, GameController.PlayerType attaker)
     {
-        shipsController.SendShips(targetPlanet, shipsCount, attaker, _planetRenderer.color);
+        var overPlanets = GameController.Instance.AllPlanets;
+        overPlanets.Remove(targetPlanet);
+        overPlanets.Remove(this);
+        
+        shipsController.SendShips(targetPlanet, shipsCount,  attaker, _planetRenderer.color, overPlanets);
         
         _shipsCount -= shipsCount;
         SetPlanetShipsCount();
@@ -98,6 +102,7 @@ public class Planet : MonoBehaviour
                     var attackerPlanet = GameController.Instance.SelectedPlanet;
                     var shipsInPercent = (float) attackerPlanet.ShipsCount / 10; //todo В константу!!
                     var shipsCount = (int)Mathf.Ceil(shipsInPercent * GameController.Instance.SliderShipValue);
+
                     attackerPlanet.SendShips(shipsCount, this, attackerPlanet.PlayerType);
                 }
 
