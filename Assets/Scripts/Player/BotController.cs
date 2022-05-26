@@ -27,7 +27,7 @@ public class BotController : PlayerController
             var planet = _planets[Random.Range(0, _planets.Count)];
             var shipsCount = Random.Range(1, planet.ShipsCount + 1);
             
-            GameController.Instance.AttackRandomPlanet(planet, _playerType, shipsCount);
+            LevelController.Instance.AttackRandomPlanet(planet, _playerType, shipsCount);
         }
     }
 }

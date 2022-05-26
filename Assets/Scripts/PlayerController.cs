@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] protected List<Planet> _planets;
-    [SerializeField] protected GameController.PlayerType _playerType;
+    [SerializeField] protected LevelController.PlayerType _playerType;
     [SerializeField] private Color _planetsColor;
 
     public Color PlanetsColor => _planetsColor;
@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public GameController.PlayerType PlayerType => _playerType;
+    public LevelController.PlayerType PlayerType => _playerType;
 
     public List<Planet> Planets => _planets;
 }

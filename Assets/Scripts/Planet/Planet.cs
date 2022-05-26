@@ -6,7 +6,7 @@ public class Planet : MonoBehaviour
 {
     private const float SPAWN_SHIPS_DELAY = 2f;
 
-    [SerializeField] private GameController.PlayerType _playerType;
+    [SerializeField] private LevelController.PlayerType _playerType;
     [SerializeField] private int _shipsCount;
     [SerializeField] private NavigationItem _navigation;
     [SerializeField] private ShipsController shipsController;
@@ -25,7 +25,7 @@ public class Planet : MonoBehaviour
     
     public NavigationItem Navigation => _navigation;
 
-    public GameController.PlayerType PlayerType
+    public LevelController.PlayerType PlayerType
     {
         get => _playerType;
         set => _playerType = value;
@@ -39,7 +39,7 @@ public class Planet : MonoBehaviour
         }
     }
 
-    public void Init(GameController.PlayerType playerType, Color planetColor)
+    public void Init(LevelController.PlayerType playerType, Color planetColor)
     {
         _playerType = playerType;
         SetPlanetColor(planetColor);
@@ -50,7 +50,7 @@ public class Planet : MonoBehaviour
         _planetRenderer.color = planetColor;
     }
 
-    public void Attacked(int enemyShips, GameController.PlayerType attackerType)
+    public void Attacked(int enemyShips, LevelController.PlayerType attackerType)
     {
         if (attackerType == _playerType)
         {
@@ -75,9 +75,9 @@ public class Planet : MonoBehaviour
         SetPlanetShipsCount();
     }
 
-    public void SendShips(int shipsCount, Planet targetPlanet, GameController.PlayerType attaker)
+    public void SendShips(int shipsCount, Planet targetPlanet, LevelController.PlayerType attaker)
     {
-        var overPlanets = GameController.Instance.AllPlanets;
+        var overPlanets = LevelController.Instance.AllPlanets;
         overPlanets.Remove(targetPlanet);
         overPlanets.Remove(this);
         
@@ -91,17 +91,17 @@ public class Planet : MonoBehaviour
     {
         switch (_playerType)
         {
-            case GameController.PlayerType.Player:
-                GameController.Instance.SelectedPlanet = this;
+            case LevelController.PlayerType.Player:
+                LevelController.Instance.SelectedPlanet = this;
                 
                 break;
             default:
 
-                if (GameController.Instance.SelectedPlanet != null)
+                if (LevelController.Instance.SelectedPlanet != null)
                 {
-                    var attackerPlanet = GameController.Instance.SelectedPlanet;
+                    var attackerPlanet = LevelController.Instance.SelectedPlanet;
                     var shipsInPercent = (float) attackerPlanet.ShipsCount / 10; //todo В константу!!
-                    var shipsCount = (int)Mathf.Ceil(shipsInPercent * GameController.Instance.SliderShipValue);
+                    var shipsCount = (int)Mathf.Ceil(shipsInPercent * LevelController.Instance.SliderShipValue);
 
                     attackerPlanet.SendShips(shipsCount, this, attackerPlanet.PlayerType);
                 }

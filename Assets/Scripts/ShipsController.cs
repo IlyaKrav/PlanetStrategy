@@ -10,7 +10,7 @@ public class ShipsController : MonoBehaviour
 
     [SerializeField] private Transform _shipParent;
 
-    public void SendShips(Planet targetPlanet, int shipsCount, GameController.PlayerType attacker, Color shipColor, List<Planet> overPlanets)
+    public void SendShips(Planet targetPlanet, int shipsCount, LevelController.PlayerType attacker, Color shipColor, List<Planet> overPlanets)
     {
         var shipHeightCount = shipsCount / SHIP_HEIGHT;
         var lastShipHeight = shipsCount % SHIP_HEIGHT;
@@ -149,7 +149,7 @@ public class ShipsController : MonoBehaviour
     }
 
     private IEnumerator MoveShipsAnimation(Planet targetPlanet, Ship ship, int shipHeight,
-        GameController.PlayerType attacker, List<Vector2> way)
+        LevelController.PlayerType attacker, List<Vector2> way)
     {
         var totalPeriod = 5f; //todo В константу!
         var wayCount = way.Count;

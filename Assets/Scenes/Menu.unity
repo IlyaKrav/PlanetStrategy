@@ -545,11 +545,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 028ca932c5264d84fbdf697e1d48fe8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onBack:
+    m_PersistentCalls:
+      m_Calls: []
+  _selectItemKey: 13
+  _backKey: 27
   _items:
   - {fileID: 4546205660077600427}
   - {fileID: 1117024299}
   - {fileID: 609247345}
   - {fileID: 1728242693}
+  _selectFirstItemOnStart: 1
+  _selectorColor: {r: 0.9427506, g: 1, b: 0, a: 1}
 --- !u!1001 &1117024297
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -773,6 +780,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52a894c84810dda4c840bae3ed9794c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _navigation: {fileID: 1004059165}
 --- !u!4 &1480954874
 Transform:
   m_ObjectHideFlags: 0
@@ -955,6 +963,10 @@ PrefabInstance:
     - target: {fileID: 6562894333962707380, guid: 0bdbf85469ff4c744b95d965ab6149dd, type: 3}
       propertyPath: m_Name
       value: Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 7858555088996076524, guid: 0bdbf85469ff4c744b95d965ab6149dd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9113656231875139444, guid: 0bdbf85469ff4c744b95d965ab6149dd, type: 3}
       propertyPath: m_Pivot.x

@@ -171,10 +171,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7e7fd36b6b5b8549909324162a59e61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _selectObj: {fileID: 7858555088996076524}
   onClick:
     m_PersistentCalls:
       m_Calls: []
+  _selectCover: {fileID: 0}
+  _selectCoverImage: {fileID: 735477888392305179}
 --- !u!1 &7858555088996076524
 GameObject:
   m_ObjectHideFlags: 0

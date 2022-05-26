@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 public class ActionManager : MonoBehaviour
 {
-    public UnityAction<Planet, GameController.PlayerType, GameController.PlayerType> CapturePlanet;
+    public UnityAction<Planet, LevelController.PlayerType, LevelController.PlayerType> CapturePlanet;
 
     public static ActionManager Instance;
     

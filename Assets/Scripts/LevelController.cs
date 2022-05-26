@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameController : MonoBehaviour
+public class LevelController : MonoBehaviour
 {
     [SerializeField] private List<PlayerController> _playersList;
 
@@ -54,15 +53,15 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private static GameController _instance;
+    private static LevelController _instance;
 
-    public static GameController Instance
+    public static LevelController Instance
     {
         get
         {
             if (_instance == null)
             {
-                _instance = FindObjectOfType<GameController>();
+                _instance = FindObjectOfType<LevelController>();
             }
 
             return _instance;
