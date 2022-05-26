@@ -218,13 +218,13 @@ public class LevelController : MonoBehaviour
             }
         }
 
-        //CheckWinner(totalPayerCount, totalEnemiesCount);
+        CheckWinner(totalPayerCount, totalEnemiesCount);
         UpdateWinSlider(totalPayerCount, totalEnemiesCount);
     }
 
     private void CheckWinner(float totalPayerCount, float totalEnemiesCount)
     {
-        if (totalPayerCount == 0)
+        if (totalPayerCount == 0 && _playersDictionary[PlayerType.Player].Planets.Count == 0)
         {
             SceneManager.LoadSceneAsync("LoseWindow", LoadSceneMode.Additive);
             enabled = false;

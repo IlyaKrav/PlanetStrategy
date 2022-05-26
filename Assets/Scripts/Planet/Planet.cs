@@ -37,6 +37,8 @@ public class Planet : MonoBehaviour
         {
             StartSpawnShips();
         }
+        
+        SetPlanetShipsCount();
     }
 
     public void Init(LevelController.PlayerType playerType, Color planetColor)

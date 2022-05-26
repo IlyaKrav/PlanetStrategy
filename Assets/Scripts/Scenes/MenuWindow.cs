@@ -1,8 +1,7 @@
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MenuController : MonoBehaviour
+public class MenuWindow : MonoBehaviour
 {
     [SerializeField] private NavigationItems _navigation;
 
