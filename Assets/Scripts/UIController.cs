@@ -6,10 +6,14 @@ public static class UIController
     {
         SceneManager.LoadSceneAsync(sceneName);
     }
+    
+    public static void OpenSceneNotAsync(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
 
     public static void CloseScene(string sceneName)
     {
         SceneManager.UnloadSceneAsync(sceneName);
-
     }
 }

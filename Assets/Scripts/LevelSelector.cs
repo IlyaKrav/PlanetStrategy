@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelSelector: MonoBehaviour
@@ -21,6 +20,6 @@ public class LevelSelector: MonoBehaviour
     {
         DataHolder.CurrentLevel = _levelPrefab;
 
-        SceneManager.LoadSceneAsync("Game");
+        UIController.OpenSceneNotAsync("Loading");
     }
 }
