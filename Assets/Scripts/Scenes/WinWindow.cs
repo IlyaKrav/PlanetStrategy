@@ -12,6 +12,6 @@ public class WinWindow : GUIScreens
     
     public void OnBackButton()
     {
-        UIController.OpenScene("StartScene");
+        UIController.OpenScene("Levels");
     }
 }

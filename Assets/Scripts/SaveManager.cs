@@ -30,6 +30,7 @@ public class SaveManager : MonoBehaviour
     public void Init(List<GameObject> levels)
     {
         _currentData = new List<LevelData>();
+        _saveDataLevels = new List<LevelData>();
 
         for (var i = 0; i < levels.Count; i++)
         {
@@ -59,7 +60,6 @@ public class SaveManager : MonoBehaviour
 
             if (_saveDataLevels.Count <= i)
             {
-                Debug.LogError("13");
                 _saveDataLevels.Add(level);
             }
         }
@@ -71,8 +71,6 @@ public class SaveManager : MonoBehaviour
 
         var saveDataText = JsonUtility.ToJson(saveData);
         File.WriteAllText(Application.dataPath + SAVE_FILE_NAME, saveDataText);
-
-        _saveDataLevels = new List<LevelData>();
     }
 
     public void UpdateLevelData(int index)
