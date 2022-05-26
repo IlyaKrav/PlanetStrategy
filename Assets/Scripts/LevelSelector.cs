@@ -18,6 +18,8 @@ public class LevelSelector: MonoBehaviour
 
     public void OnPlayClick()
     {
+        SoundController.Instance.OnTap();
+
         DataHolder.CurrentLevel = _levelPrefab;
 
         UIController.OpenSceneNotAsync("Loading");

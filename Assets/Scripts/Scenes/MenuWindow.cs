@@ -11,6 +11,7 @@ public class MenuWindow : GUIScreens
 
     public void OpenLevelsScene()
     {
+        SoundController.Instance.OnTap();
         UIController.OpenScene("Levels");
     }
 }

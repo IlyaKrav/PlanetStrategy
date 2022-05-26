@@ -137,6 +137,7 @@ public class LevelController : MonoBehaviour
             capturedPlanet.StartSpawnShips();
         }
 
+        SoundController.Instance.OnCapture();
         SetPlanetToAttacker(capturedPlanet, attackerType, attacking);
     }
 
