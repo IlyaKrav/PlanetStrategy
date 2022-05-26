@@ -604,9 +604,17 @@ PrefabInstance:
       propertyPath: _shipParent
       value: 
       objectReference: {fileID: 1070059157}
+    - target: {fileID: 2888882508532897803, guid: f46b4f0711d34684bab4e96159246680, type: 3}
+      propertyPath: _planets.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2888882508532897803, guid: f46b4f0711d34684bab4e96159246680, type: 3}
+      propertyPath: _planets.Array.data[0]
+      value: 
+      objectReference: {fileID: 4161738290068974592}
     - target: {fileID: 3749346325838854472, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: _planets.Array.size
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3749346325838854472, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: _planets.Array.data[0]
@@ -710,11 +718,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4161738289135000793, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.82
+      value: -1.99
       objectReference: {fileID: 0}
     - target: {fileID: 4161738289135000793, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -2.88
+      value: -3.7
       objectReference: {fileID: 0}
     - target: {fileID: 4161738289135000793, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1505,9 +1513,17 @@ PrefabInstance:
       propertyPath: _shipParent
       value: 
       objectReference: {fileID: 1473417154}
+    - target: {fileID: 2888882508532897803, guid: f46b4f0711d34684bab4e96159246680, type: 3}
+      propertyPath: _planets.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2888882508532897803, guid: f46b4f0711d34684bab4e96159246680, type: 3}
+      propertyPath: _planets.Array.data[0]
+      value: 
+      objectReference: {fileID: 4161738290068974592}
     - target: {fileID: 3749346325838854472, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: _planets.Array.size
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3749346325838854472, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: _planets.Array.data[0]
@@ -1603,11 +1619,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4161738289135000793, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 3
+      value: 1.71
       objectReference: {fileID: 0}
     - target: {fileID: 4161738289135000793, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1
+      value: 2.38
       objectReference: {fileID: 0}
     - target: {fileID: 4161738289135000793, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2030,9 +2046,17 @@ PrefabInstance:
       propertyPath: _shipParent
       value: 
       objectReference: {fileID: 1957328987}
+    - target: {fileID: 2888882508532897803, guid: f46b4f0711d34684bab4e96159246680, type: 3}
+      propertyPath: _planets.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2888882508532897803, guid: f46b4f0711d34684bab4e96159246680, type: 3}
+      propertyPath: _planets.Array.data[0]
+      value: 
+      objectReference: {fileID: 4161738290068974592}
     - target: {fileID: 3749346325838854472, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: _planets.Array.size
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3749346325838854472, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: _planets.Array.data[0]
@@ -2041,11 +2065,11 @@ PrefabInstance:
     - target: {fileID: 3749346325838854472, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: _planets.Array.data[1]
       value: 
-      objectReference: {fileID: 1473417156}
+      objectReference: {fileID: 0}
     - target: {fileID: 3749346325838854472, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: _planets.Array.data[2]
       value: 
-      objectReference: {fileID: 1957328990}
+      objectReference: {fileID: 0}
     - target: {fileID: 3749346325838854472, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: _planets.Array.data[3]
       value: 
@@ -2136,11 +2160,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4161738289135000793, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -3
+      value: -1.65
       objectReference: {fileID: 0}
     - target: {fileID: 4161738289135000793, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 2
+      value: -0.22
       objectReference: {fileID: 0}
     - target: {fileID: 4161738289135000793, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2199,9 +2223,17 @@ PrefabInstance:
       propertyPath: _shipParent
       value: 
       objectReference: {fileID: 1606121252}
+    - target: {fileID: 2888882508532897803, guid: f46b4f0711d34684bab4e96159246680, type: 3}
+      propertyPath: _planets.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2888882508532897803, guid: f46b4f0711d34684bab4e96159246680, type: 3}
+      propertyPath: _planets.Array.data[0]
+      value: 
+      objectReference: {fileID: 4161738290068974592}
     - target: {fileID: 3749346325838854472, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: _planets.Array.size
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3749346325838854472, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: _planets.Array.data[0]
@@ -2297,11 +2329,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4161738289135000793, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 0.16
       objectReference: {fileID: 0}
     - target: {fileID: 4161738289135000793, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.4
+      value: 1.14
       objectReference: {fileID: 0}
     - target: {fileID: 4161738289135000793, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
