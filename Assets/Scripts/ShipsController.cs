@@ -91,6 +91,11 @@ public class ShipsController : MonoBehaviour
 
         foreach (var planet in overPlanets)
         {
+            if (Vector2.Distance(startPos, endPos) < Vector2.Distance(startPos, planet.transform.position))
+            {
+                continue;
+            }
+            
             var overVectors = CalculatePoints(wayLineRatio, wayLineShift, planet);
 
             if (float.IsNaN(overVectors.Item1.x))
