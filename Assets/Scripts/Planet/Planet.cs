@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class Planet : MonoBehaviour
 {
-    private const float SPAWN_SHIPS_DELAY = 2f;
-
+    [SerializeField] private PlanetConfig _planetConfig;
+    
     [SerializeField] private LevelController.PlayerType _playerType;
     [SerializeField] private int _shipsCount;
     [SerializeField] private NavigationItem _navigation;
@@ -28,7 +28,6 @@ public class Planet : MonoBehaviour
     public LevelController.PlayerType PlayerType
     {
         get => _playerType;
-        set => _playerType = value;
     }
 
     private void Start()
@@ -102,7 +101,7 @@ public class Planet : MonoBehaviour
                 if (LevelController.Instance.SelectedPlanet != null)
                 {
                     var attackerPlanet = LevelController.Instance.SelectedPlanet;
-                    var shipsInPercent = (float) attackerPlanet.ShipsCount / 10; //todo В константу!!
+                    var shipsInPercent = (float) attackerPlanet.ShipsCount / 10;
                     var shipsCount = (int)Mathf.Ceil(shipsInPercent * LevelController.Instance.SliderShipValue);
 
                     attackerPlanet.SendShips(shipsCount, this, attackerPlanet.PlayerType);
@@ -130,7 +129,7 @@ public class Planet : MonoBehaviour
             _shipsCount++;
             SetPlanetShipsCount();
 
-            yield return new WaitForSecondsRealtime(SPAWN_SHIPS_DELAY);
+            yield return new WaitForSecondsRealtime(_planetConfig.spawnShipDelay);
         }
     }
 }

@@ -6,29 +6,28 @@ using Random = UnityEngine.Random;
 
 public class ShipsController : MonoBehaviour
 {
-    private const int SHIP_HEIGHT = 5;
-
+    [SerializeField] private ShipConfig _shipConfig;
     [SerializeField] private Transform _shipParent;
 
     public void SendShips(Planet targetPlanet, int shipsCount, LevelController.PlayerType attacker, Color shipColor, List<Planet> overPlanets)
     {
-        var shipHeightCount = shipsCount / SHIP_HEIGHT;
-        var lastShipHeight = shipsCount % SHIP_HEIGHT;
+        var shipHeightCount = shipsCount / _shipConfig.shipHeight;
+        var lastShipHeight = shipsCount % _shipConfig.shipHeight;
 
         for (int i = 0; i < shipHeightCount; i++)
         {
             var ship = ShipPoolManager.Instance.GetShip();
             ship.SetColor(shipColor);
             ship.transform.SetParent(_shipParent);
-            ship.transform.localPosition = new Vector2(Random.Range(0f, 0.5f), Random.Range(0f, 0.5f));
+            ship.transform.localPosition = new Vector2(Random.Range(0f,_shipConfig.spawnShipShift), Random.Range(0f, _shipConfig.spawnShipShift));
 
             var startPos = (Vector2) ship.transform.position;
             var targetPosition = targetPlanet.transform.position;
-            var endPos = new Vector2(targetPosition.x + Random.Range(0f, 0.5f), targetPosition.y); 
+            var endPos = new Vector2(targetPosition.x + Random.Range(0f, _shipConfig.spawnShipShift), targetPosition.y); 
 
             var way = CalculateWay(startPos, endPos, overPlanets);
 
-            StartCoroutine(MoveShipsAnimation(targetPlanet, ship, SHIP_HEIGHT, attacker, way));
+            StartCoroutine(MoveShipsAnimation(targetPlanet, ship, _shipConfig.shipHeight, attacker, way));
         }
 
         if (lastShipHeight != 0)
@@ -36,11 +35,11 @@ public class ShipsController : MonoBehaviour
             var ship = ShipPoolManager.Instance.GetShip();
             ship.SetColor(shipColor);
             ship.transform.SetParent(_shipParent);
-            ship.transform.localPosition = new Vector2(Random.Range(0f, 0.5f), Random.Range(0f, 0.5f));
+            ship.transform.localPosition = new Vector2(Random.Range(0f, _shipConfig.spawnShipShift), Random.Range(0f, _shipConfig.spawnShipShift));
 
             var startPos = (Vector2) ship.transform.position;
             var targetPosition = targetPlanet.transform.position;
-            var endPos = new Vector2(targetPosition.x + Random.Range(0f, 0.5f), targetPosition.y);
+            var endPos = new Vector2(targetPosition.x + Random.Range(0f, _shipConfig.spawnShipShift), targetPosition.y);
 
             var way = CalculateWay(startPos, endPos, overPlanets);
 
@@ -151,7 +150,7 @@ public class ShipsController : MonoBehaviour
     private IEnumerator MoveShipsAnimation(Planet targetPlanet, Ship ship, int shipHeight,
         LevelController.PlayerType attacker, List<Vector2> way)
     {
-        var totalPeriod = 5f; //todo В константу!
+        var totalPeriod = _shipConfig.shipFlyPeriod;
         var wayCount = way.Count;
         var period = totalPeriod / wayCount;
 
