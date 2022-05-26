@@ -7,8 +7,10 @@ public class SaveManager : MonoBehaviour
 {
     private const string SAVE_FILE_NAME = "/saveData.json";
 
-    private List<LevelData> _saveData = new List<LevelData>();
+    private List<LevelData> _saveDataLevels = new List<LevelData>();
     private List<LevelData> _currentData = new List<LevelData>();
+
+    public List<LevelData> SaveDataLevels => _saveDataLevels;
 
     public static SaveManager Instance = null;
 
@@ -28,13 +30,14 @@ public class SaveManager : MonoBehaviour
     public void Init(List<GameObject> levels)
     {
         _currentData = new List<LevelData>();
-        
+
         for (var i = 0; i < levels.Count; i++)
         {
             _currentData.Add(new LevelData()
             {
                 index = i,
-                isOpen = false
+                isOpen = false,
+                isPassed = false
             });
         }
 
@@ -42,23 +45,51 @@ public class SaveManager : MonoBehaviour
 
         SetSaveData();
 
-        if (_saveData == null || _saveData.Count == 0)
+        if (_saveDataLevels == null || _currentData.Count != _saveDataLevels.Count)
         {
-            _saveData = _currentData;
             UpdateData();
         }
     }
 
     public void UpdateData()
     {
-        var saveData = new SaveData
+        for (var i = 0; i < _currentData.Count; i++)
         {
-            levels = _currentData
-        };
-        var saveDataText = JsonUtility.ToJson(saveData);
+            var level = _currentData[i];
 
-        Debug.LogError(saveData);
+            if (_saveDataLevels.Count <= i)
+            {
+                Debug.LogError("13");
+                _saveDataLevels.Add(level);
+            }
+        }
         
+        var saveData = new SaveData()
+        {
+            levels = _saveDataLevels
+        };
+
+        var saveDataText = JsonUtility.ToJson(saveData);
+        File.WriteAllText(Application.dataPath + SAVE_FILE_NAME, saveDataText);
+
+        _saveDataLevels = new List<LevelData>();
+    }
+
+    public void UpdateLevelData(int index)
+    {
+        _saveDataLevels[index].isPassed = true;
+
+        if (index + 1 < _saveDataLevels.Count)
+        {
+            _saveDataLevels[index + 1].isOpen = true;
+        }
+
+        var saveData = new SaveData()
+        {
+            levels = _saveDataLevels
+        };
+
+        var saveDataText = JsonUtility.ToJson(saveData);
         File.WriteAllText(Application.dataPath + SAVE_FILE_NAME, saveDataText);
     }
 
@@ -67,7 +98,7 @@ public class SaveManager : MonoBehaviour
         if (File.Exists(Application.dataPath + SAVE_FILE_NAME))
         {
             var json = File.ReadAllText(Application.dataPath + SAVE_FILE_NAME);
-            _saveData = JsonUtility.FromJson<SaveData>(json).levels;
+            _saveDataLevels = JsonUtility.FromJson<SaveData>(json).levels;
         }
     }
 }
@@ -83,4 +114,5 @@ public class LevelData
 {
     public int index;
     public bool isOpen;
+    public bool isPassed;
 }

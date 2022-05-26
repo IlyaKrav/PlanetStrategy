@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -234,6 +235,7 @@ public class LevelController : MonoBehaviour
         
         if (totalEnemiesCount == 0)
         {
+            SaveManager.Instance.UpdateLevelData(DataHolder.CurrentLevelIndex);
             SceneManager.LoadSceneAsync("WinWindow", LoadSceneMode.Additive);
             enabled = false;
             return;

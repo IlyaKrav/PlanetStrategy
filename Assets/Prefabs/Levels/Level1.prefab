@@ -1369,7 +1369,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4161738289135000792, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: _shipsCount
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4161738289135000792, guid: f46b4f0711d34684bab4e96159246680, type: 3}
       propertyPath: _startSpawnShips

@@ -7,27 +7,34 @@ public class LevelSelectorWindow : GUIScreens
     [SerializeField] private LevelSelector _levelSelectorPrefab;
     [SerializeField] private Transform _levelSelectorParent;
     [SerializeField] private NavigationItems _navigation;
-    
+
     void Start()
     {
-        Init();
         SaveManager.Instance.Init(_levelsPrefabs);
+        Init();
     }
 
     private void Init()
     {
         var levelsPrefabsCount = _levelsPrefabs.Count;
+        var saveDataLevels = SaveManager.Instance.SaveDataLevels;
 
         for (int i = 0; i < levelsPrefabsCount; i++)
         {
             var levelPrefab = _levelsPrefabs[i];
+            var levelData = saveDataLevels[i];
 
             var levelSelector = Instantiate(_levelSelectorPrefab, _levelSelectorParent);
             levelSelector.Init(levelPrefab, i);
+            levelSelector.SetEnable(levelData.isOpen);
+            levelSelector.SetPass(levelData.isPassed);
             
-            _navigation.AddItemToEnd(levelSelector.Navigation);
+            if (levelData.isOpen)
+            {
+                _navigation.AddItemToEnd(levelSelector.Navigation);
+            }
         }
-        
+
         _navigation.Init();
     }
 
