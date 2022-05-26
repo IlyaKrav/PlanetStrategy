@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GameWindow : MonoBehaviour
+public class GameWindow : GUIScreens
 {
     void Awake()
     {

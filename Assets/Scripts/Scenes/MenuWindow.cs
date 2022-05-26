@@ -1,7 +1,6 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class MenuWindow : MonoBehaviour
+public class MenuWindow : GUIScreens
 {
     [SerializeField] private NavigationItems _navigation;
 
@@ -10,8 +9,8 @@ public class MenuWindow : MonoBehaviour
         _navigation.Init();
     }
 
-    public void OpenGameScene()
+    public void OpenLevelsScene()
     {
-        SceneManager.LoadSceneAsync("Game");
+        UIController.OpenScene("Levels");
     }
 }

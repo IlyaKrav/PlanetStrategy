@@ -1,15 +1,12 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
-
-public class LoseWindow : MonoBehaviour
+public class LoseWindow : GUIScreens
 {
     public void OnRestartButton()
     {
-        SceneManager.LoadSceneAsync("Game");
+        UIController.OpenScene("Game");
     }
     
     public void OnBackButton()
     {
-        SceneManager.LoadSceneAsync("Menu");
+        UIController.OpenScene("Menu");
     }
 }

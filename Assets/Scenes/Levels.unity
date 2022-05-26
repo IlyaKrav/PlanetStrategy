@@ -542,6 +542,7 @@ GameObject:
   - component: {fileID: 907107217}
   - component: {fileID: 907107216}
   - component: {fileID: 907107220}
+  - component: {fileID: 907107221}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -649,6 +650,39 @@ MonoBehaviour:
   - {fileID: 5677956160964491920, guid: 31a1a07b8138a854181a5e35bbc5e902, type: 3}
   _levelSelectorPrefab: {fileID: 7343322806728225217, guid: e366085622ddf2344a23bf7ec9aa4a77, type: 3}
   _levelSelectorParent: {fileID: 1022859847}
+  _navigation: {fileID: 907107221}
+--- !u!114 &907107221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907107215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 028ca932c5264d84fbdf697e1d48fe8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onBack:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 907107220}
+        m_TargetAssemblyTypeName: LevelSelectorWindow, Assembly-CSharp
+        m_MethodName: OnBack
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _selectItemKey: 13
+  _backKey: 27
+  _items: []
+  _selectFirstItemOnStart: 1
+  _selectorColor: {r: 1, g: 0.9990684, b: 0, a: 1}
 --- !u!1 &1022859846
 GameObject:
   m_ObjectHideFlags: 0
@@ -763,8 +797,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 90.640015}
-  m_SizeDelta: {x: -122.23, y: -283.13}
+  m_AnchoredPosition: {x: 0, y: 4.299988}
+  m_SizeDelta: {x: -122.23, y: -110.45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1609090610
 MonoBehaviour:

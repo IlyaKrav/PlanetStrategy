@@ -1,23 +1,37 @@
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
-public class LevelSelectorWindow : MonoBehaviour
+public class LevelSelectorWindow : GUIScreens
 {
-    [SerializeField] private Text _levelText;
-
-    private GameObject _levelPrefab;
-
-    public void Init(GameObject levelPrefab, int index)
+    [SerializeField] private List<GameObject> _levelsPrefabs;
+    [SerializeField] private LevelSelector _levelSelectorPrefab;
+    [SerializeField] private Transform _levelSelectorParent;
+    [SerializeField] private NavigationItems _navigation;
+    
+    void Start()
     {
-        _levelText.text = (index + 1).ToString();
-        _levelPrefab = levelPrefab;
+        Init();
     }
 
-    public void OnPlayClick()
+    private void Init()
     {
-        DataHolder.CurrentLevel = _levelPrefab;
+        var levelsPrefabsCount = _levelsPrefabs.Count;
 
-        SceneManager.LoadSceneAsync("Game");
+        for (int i = 0; i < levelsPrefabsCount; i++)
+        {
+            var levelPrefab = _levelsPrefabs[i];
+
+            var levelSelector = Instantiate(_levelSelectorPrefab, _levelSelectorParent);
+            levelSelector.Init(levelPrefab, i);
+            
+            _navigation.AddItemToEnd(levelSelector.Navigation);
+        }
+        
+        _navigation.Init();
+    }
+
+    public void OnBack()
+    {
+        UIController.OpenScene("Menu");
     }
 }
