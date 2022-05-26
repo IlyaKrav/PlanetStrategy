@@ -10,6 +10,7 @@ public class LevelSelectorWindow : GUIScreens
 
     void Start()
     {
+        HintsController.Instance.ChangeStateTo(HintsController.HintsState.SelectLevel);
         SaveManager.Instance.Init(_levelsPrefabs);
         Init();
     }

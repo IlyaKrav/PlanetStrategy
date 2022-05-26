@@ -1,9 +1,8 @@
-using System;
-
 public class LoseWindow : GUIScreens
 {
     private void Start()
     {
+        HintsController.Instance.ChangeStateTo(HintsController.HintsState.None);
         SoundController.Instance.OnLose();
     }
 

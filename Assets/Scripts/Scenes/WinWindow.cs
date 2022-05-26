@@ -2,6 +2,7 @@ public class WinWindow : GUIScreens
 {
     private void Start()
     {
+        HintsController.Instance.ChangeStateTo(HintsController.HintsState.None);
         SoundController.Instance.OnWin();
     }
 

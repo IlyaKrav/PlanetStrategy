@@ -94,7 +94,7 @@ public class Planet : MonoBehaviour
         {
             case LevelController.PlayerType.Player:
                 LevelController.Instance.SelectedPlanet = this;
-                
+                HintsController.Instance.ChangeStateTo(HintsController.HintsState.SelectEnemy);
                 break;
             default:
 

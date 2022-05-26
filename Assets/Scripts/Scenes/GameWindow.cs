@@ -8,5 +8,7 @@ public class GameWindow : GUIScreens
         {
             Instantiate(level);
         }
+        
+        HintsController.Instance.ChangeStateTo(HintsController.HintsState.SelectPlanet);
     }
 }

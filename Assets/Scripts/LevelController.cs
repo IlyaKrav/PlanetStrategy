@@ -191,6 +191,7 @@ public class LevelController : MonoBehaviour
 
     public void UnselectEnemiesPlanets()
     {
+        HintsController.Instance.ChangeStateTo(HintsController.HintsState.SelectPlanet);
         _enemyNavigation.Disable(true);
         _userNavigation.Enable();
         _userNavigation.SelectFirstItem();
