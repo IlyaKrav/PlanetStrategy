@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -132,6 +133,8 @@ public class ShipsController : MonoBehaviour
             var way = new List<Vector2>();
             way.Add(startPos);
             
+            _planets = _planets.OrderBy(point => Vector3.Distance(startPos, point.transform.position)).ToList();
+
             foreach (var planet in _planets)
             {
                 var a = CalculatePoints(k, b, planet);
@@ -143,9 +146,6 @@ public class ShipsController : MonoBehaviour
                 
                 Vector2 vec1;
                 Vector2 vec2;
-
-                Debug.LogError("a.Item1 = " + a.Item1);
-                Debug.LogError("a.Item2 = " + a.Item2);
                 
                 if (a.Item1 != a.Item2)
                 {
