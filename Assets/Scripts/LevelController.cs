@@ -189,12 +189,12 @@ public class LevelController : MonoBehaviour
         attackerPlanet.SendShips(shipsCount, attackingPlanet, attackerType);
     }
 
-    public void UnselectEnemiesPlanets()
+    public void UnselectPlanets()
     {
         HintsController.Instance.ChangeStateTo(HintsController.HintsState.SelectPlanet);
         _enemyNavigation.Disable(true);
+        _userNavigation.UnselectItems();
         _userNavigation.Enable();
-        _userNavigation.SelectFirstItem();
         _selectedPlanet = null;
     }
 

@@ -979,7 +979,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 9191305130718311020}
         m_TargetAssemblyTypeName: GameController, Assembly-CSharp
-        m_MethodName: UnselectEnemiesPlanets
+        m_MethodName: UnselectPlanets
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1826,7 +1826,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9075811895313990006, guid: 1a4537ddfc1f5d9468fe4b0919995944, type: 3}
       propertyPath: _planetsColor.b
-      value: 0
+      value: 0.32743883
       objectReference: {fileID: 0}
     - target: {fileID: 9075811895313990006, guid: 1a4537ddfc1f5d9468fe4b0919995944, type: 3}
       propertyPath: _planetsColor.g
@@ -1834,7 +1834,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9075811895313990006, guid: 1a4537ddfc1f5d9468fe4b0919995944, type: 3}
       propertyPath: _planetsColor.r
-      value: 0.96575654
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9075811895313990006, guid: 1a4537ddfc1f5d9468fe4b0919995944, type: 3}
       propertyPath: _planets.Array.size

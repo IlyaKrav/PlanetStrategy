@@ -14,4 +14,10 @@ public class MenuWindow : GUIScreens
         SoundController.Instance.OnTap();
         UIController.OpenScene("Levels");
     }
+    
+    public void OpenHowToPlay()
+    {
+        SoundController.Instance.OnTap();
+        UIController.OpenScene("HowToPlay");
+    }
 }

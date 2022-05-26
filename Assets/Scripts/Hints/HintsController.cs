@@ -7,6 +7,7 @@ public class HintsController : MonoBehaviour
     private const string SELECT_ENEMY_TEXT = "Select enemy planet";
     private const string NONE_TEXT = "";
     private const string SELECT_LEVEL_TEXT = "Select level";
+    private const string BACK_TEXT = "Press escape to go back";
     
     [SerializeField] private Text _text;
 
@@ -17,7 +18,8 @@ public class HintsController : MonoBehaviour
         None,
         SelectPlanet,
         SelectEnemy,
-        SelectLevel
+        SelectLevel,
+        Back
     }
 
     public static HintsController Instance = null;
@@ -61,6 +63,10 @@ public class HintsController : MonoBehaviour
             
             case HintsState.SelectPlanet:
                 _text.text = SELECT_PLANET_TEXT;
+                break;
+            
+            case HintsState.Back:
+                _text.text = BACK_TEXT;
                 break;
         }
     }
